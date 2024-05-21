@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Anagrama</title>
+</head>
+<body>
+    <div id="container">
+        <h1>Verificador de Anagrama</h1>
+
+        <div>
+            <label for="MeuInput">Digite a primeira palavra:</label>
+            <input type="text" id="MeuInput1">
+            <label for="MeuInput">Digite a segunda palavra:</label>
+            <input type="text" id="MeuInput2">
+
+            <button onclick="mostrarValor()">Mostrar resultado</button>
+        </div>
+    
+        <div>
+            <p id="result_text" style="display: none; overflow-wrap: break-word;"></p>
+        </div>
+    </div>
+
+    <script>
+        // Função Padrão para receber e exibir resultados HTML
+        function mostrarValor() {
+            let text1 = document.getElementById("MeuInput1").value;
+            let text2 = document.getElementById("MeuInput2").value;
+
+            let result_text = document.getElementById('result_text')
+
+            result_text.innerHTML = `<b>${text1}</b> e <b>${text2}</b> ${AnagramVerify(text1, text2) ? 'são' : 'não são'} Anagramas.`
+            result_text.style.display = 'block'
+        }
+
+        function TextClean(txt) {
+            return txt.replace(/[^\w]/g, '').toLowerCase();
+        }
+            
+        function AnagramVerify(txt1, txt2) {
+            let txt1_clean = TextClean(txt1)
+            let txt2_clean = TextClean(txt2)
+            if (txt1_clean.length == txt2_clean.length) {
+                return txt1_clean.split('').sort().join('') === txt2_clean.split('').sort().join('')
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>

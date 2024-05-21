@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Palídromo</title>
+</head>
+<body>
+    <div id="container">
+        <h1>Verificador de Palídromo</h1>
+
+        <div>
+            <label for="MeuInput">Escreva uma palavra:</label>
+            <input type="text" id="MeuInput">
+            <button onclick="mostrarValor()">Mostrar resultado</button>
+        </div>
+    
+        <div>
+            <p id="result_text" style="display: none; overflow-wrap: break-word;"></p>
+        </div>
+    </div>
+
+    <script>
+        // Função Padrão para receber e exibir resultados HTML
+        function mostrarValor() {
+            let text = document.getElementById("MeuInput").value;
+            let result_text = document.getElementById('result_text')
+
+            result_text.innerHTML = `O texto <b>${text}</b> ${PalidromVerify(text) ? 'é um palídromo.' : 'não é um palídromo.'}`
+            result_text.style.display = 'block'
+        }
+            
+        function PalidromVerify(text) {
+            let textLen = text.length;
+            for (let i=0; i<=textLen; i++) {
+                if (text[i] !== text[textLen - i - 1]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Número Primo</title>
+</head>
+<body>
+    <div id="container">
+        <h1>Números Primos</h1>
+
+        <div>
+            <label for="MeuInput">Digite um número:</label>
+            <input type="number" id="MeuInput">
+            <button onclick="mostrarValor()">Mostrar resultado</button>
+        </div>
+    
+        <div>
+            <p id="result_text" style="display: none; overflow-wrap: break-word;"></p>
+        </div>
+    </div>
+
+    <script>
+        // Função Padrão para receber e exibir resultados HTML
+        function mostrarValor() {
+            let numb = document.getElementById("MeuInput").value;
+            let result_text = document.getElementById('result_text')
+
+            result_text.innerText = `O número ${numb} ${numPrim(numb) ? 'é primo.' : 'não é primo.'}`
+            result_text.style.display = 'block'
+        }
+            
+        function numPrim(n) {
+            if (n < 2) {
+                return false;
+            }
+            
+            // Verifica se o número de 2 à raiz quadradada de n é divisível por n
+            for (i = 2; i <= Math.sqrt(n); i++) {
+                if (n % i == 0) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>

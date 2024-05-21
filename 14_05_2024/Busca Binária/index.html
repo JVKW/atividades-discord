@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca Binária</title>
+</head>
+<body>
+    <div id="container">
+        <h1>Busca Binária</h1>
+    
+        <div>
+            <label for="MeuInput1">Digite um Array ordenado [Ex: 1 2 3 4 5]:</label>
+            <input type="text" id="MeuInput1">
+            <label for="MeuInput2">Digite um alvo:</label>
+            <input type="number" id="MeuInput2">
+            <button onclick="mostrarValor()">Mostrar resultado</button>
+        </div>
+    
+        <div>
+            <p id="result_text" style="display: none; overflow-wrap: break-word;"></p>
+        </div>
+    </div>
+
+    <script>
+        // Função Padrão para receber e exibir resultados HTML
+        function mostrarValor() {
+            let array_terms = document.getElementById('MeuInput1').value;
+            let target_in = parseInt(document.getElementById('MeuInput2').value);
+            let result_text = document.getElementById('result_text')
+
+            result_text.innerHTML = `O elemento ${target_in} está no índice ${BinarySearch(parseInput(array_terms), target_in)}`
+            result_text.style.display = 'block'
+        }
+
+        function parseInput(input) {
+            const result = [];
+            let current = '';
+            let inDoubleQuotes = false;
+            let inSingleQuotes = false;
+
+            for (let i = 0; i < input.length; i++) {
+                const char = input[i];
+
+                if (char === '"' && !inSingleQuotes) {
+                    if (inDoubleQuotes) {
+                        result.push(current);
+                        current = '';
+                    }
+                    inDoubleQuotes = !inDoubleQuotes;
+                } else if (char === "'" && !inDoubleQuotes) {
+                    if (inSingleQuotes) {
+                        result.push(current);
+                        current = '';
+                    }
+                    inSingleQuotes = !inSingleQuotes;
+                } else if (char === ' ' && !inDoubleQuotes && !inSingleQuotes) {
+                    if (current !== '') {
+                        if (!isNaN(current)) {
+                            result.push(Number(current));
+                        } else {
+                            result.push(current);
+                        }
+                        current = '';
+                    }
+                } else {
+                    current += char;
+                }
+            }
+
+            // Adiciona o último elemento se houver
+            if (current !== '') {
+                if (!isNaN(current)) {
+                    result.push(Number(current));
+                } else {
+                    result.push(current);
+                }
+            }
+
+            return result;
+        }
+
+        function BinarySearch(array, target) {
+            let left = 0;
+            let right = array.length - 1;
+
+            while (left <= right) {
+                const meio = Math.floor((left + right) / 2);
+
+                if (array[meio] === target) {
+                    return meio;
+                } else if (array[meio] < target) {
+                    left = meio + 1;
+                } else {
+                    right = meio - 1;
+                }
+            }
+
+            return -1;
+        }
+    </script>
+</body>
+</html>

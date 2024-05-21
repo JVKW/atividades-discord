@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sequência de Fibonacci</title>
+</head>
+<body>
+    <div id="container">
+        <h1>Sequência de Fibonacci</h1>
+    
+        <div>
+            <label for="MeuInput">Quantos números:</label>
+            <input type="number" id="MeuInput">
+            <button onclick="mostrarValor()">Mostrar resultado</button>
+        </div>
+    
+        <div>
+            <p id="result_text" style="display: none; overflow-wrap: break-word;"></p>
+        </div>
+    </div>
+
+    <script>
+        // Função Padrão para receber e exibir resultados HTML
+        function mostrarValor() {
+            let num_term = document.getElementById('MeuInput').value;
+            let result_text = document.getElementById('result_text')
+
+            fiboseq = calcularFibo(num_term).join(', ');
+
+            result_text.innerText = `${fiboseq}`
+            result_text.style.display = 'block'
+        }
+
+        function calcularFibo(n) {
+            let x = [BigInt(1), BigInt(1)]; // valores iniciais como BigInts
+            for (let passo = 2; passo < n; passo++) {
+                x.push(x[x.length - 1] + x[x.length - 2]); // calcula próximo número usando BigInts
+            }
+            // Converter BigInts para strings
+            return x.map(num => num.toString());
+        }
+    </script>
+</body>
+</html>
