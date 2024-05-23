@@ -1,49 +1,48 @@
+// Permite fechar warns através do botão
 document.addEventListener('DOMContentLoaded', function() {
-    var closeButtons = document.querySelectorAll('.alert .close');
+    const closeButtons = document.querySelectorAll('.alert .close');
     
-    closeButtons.forEach(function(button) {
+    closeButtons.forEach(button => {
         button.addEventListener('click', function() {
-            var alert = this.parentElement;
-            alert.style.display = 'none';
+            this.parentElement.style.display = 'none';
         });
     });
 });
 
+// Função Padrão para mostrar os resultados
 function mostrarValor() {
-    // Variáveis de Elementos
-    let first_name = document.getElementById('first-name').value;
-    let last_name = document.getElementById('last-name').value;
-    let occupationText = document.getElementById('occupation-area').options[document.getElementById('occupation-area').selectedIndex].text;
-    let birth_date = document.getElementById('birth-date').value;
+    const first_name = document.getElementById('first-name').value; // Pega o primeiro nome
+    const last_name = document.getElementById('last-name').value; // Pega o sobrenome
+    const occupationText = document.getElementById('occupation-area').options[document.getElementById('occupation-area').selectedIndex].text; // Pega a ocupação
+    const birth_date = document.getElementById('birth-date').value; // Pega a idade
 
-    // Validação de Informações
-    if (first_name && last_name && occupationText && birth_date) {
-        if (/\d/.test(first_name) || /\d/.test(last_name)) {
+    if (first_name && last_name && occupationText && birth_date) { // Verifica se todos os dados foram preenchidos
+        if (/\d/.test(first_name) || /\d/.test(last_name)) { // Verifica se tem números no nome
             topWarn('error', 'Preencha seu nome corretamente!');
-        } else if (verificarIdade(new Date(birth_date)) > 160) {
+        } else if (verificarIdade(new Date(birth_date)) > 150 || verificarIdade(new Date(birth_date)) < 0) { // Verifica se a idade
             topWarn('error', 'Preencha sua data de nascimento corretamente!');
         } else {
-            let idade = verificarIdade(new Date(birth_date));
-            let permissoes = verificarPermissoes(idade);
+            const idade = verificarIdade(new Date(birth_date));
+            const permissoes = verificarPermissoes(idade);
 
-            let result_text = document.getElementById('result-text');
-            let date_formated = birth_date.split('-')[2] + '/' +  birth_date.split('-')[1] + '/' + birth_date.split('-')[0];
-            let complet_name = (first_name.charAt(0).toUpperCase() + first_name.substring(1) + ' ' + last_name.charAt(0).toUpperCase() + last_name.substring(1));
-            result_text.innerHTML = `
-                Nome: <b>${complet_name}</b><br>
-                Área de Atuação: <b>${occupationText}</b><br>
-                Data de Nascimento: <b>${date_formated}</b><br>
-                Idade: <b>${idade} anos</b><br>
-                Pode Beber: <b>${permissoes.podeBeber ? 'Sim' : 'Não'}</b><br>
-                Pode Dirigir: <b>${permissoes.podeDirigir ? 'Sim' : 'Não'}</b><br>
-                Pode Votar: <b>${permissoes.podeVotar ? 'Sim' : 'Não'}</b><br>
-                Pode Trabalhar: <b>${permissoes.podeTrabalhar ? 'Sim' : 'Não'}</b><br>
-                Pode Casar: <b>${permissoes.podeCasar ? 'Sim' : 'Não'}</b><br>
-                Pode Se Alistar: <b>${permissoes.podeSeAlistar ? 'Sim' : 'Não'}</b><br>
-                Maioridade Penal: <b>${permissoes.maioridadePenal ? 'Sim' : 'Não'}</b><br>
-                Pode Fazer Empréstimos: <b>${permissoes.podeFazerEmprestimos ? 'Sim' : 'Não'}</b><br>
-                Pode Abrir Conta Bancária: <b>${permissoes.podeAbrirContaBancaria ? 'Sim' : 'Não'}</b>.
-            `;
+            const dataList = [
+                { label: 'Nome', value: (first_name.charAt(0).toUpperCase() + first_name.substring(1) + ' ' + last_name.charAt(0).toUpperCase() + last_name.substring(1)) },
+                { label: 'Área de Atuação', value: occupationText },
+                { label: 'Data de Nascimento', value: formatDate(birth_date) },
+                { label: 'Idade', value: idade < 0 ? 'Menor que 1 Ano' : `${idade} anos` },
+                { label: 'Pode Beber', value: permissoes.podeBeber ? 'Sim' : 'Não' },
+                { label: 'Pode Dirigir', value: permissoes.podeDirigir ? 'Sim' : 'Não' },
+                { label: 'Pode Votar', value: permissoes.podeVotar ? 'Sim' : 'Não' },
+                { label: 'Pode Trabalhar', value: permissoes.podeTrabalhar ? 'Sim' : 'Não' },
+                { label: 'Pode Casar', value: permissoes.podeCasar ? 'Sim' : 'Não' },
+                { label: 'Pode Se Alistar', value: permissoes.podeSeAlistar ? 'Sim' : 'Não' },
+                { label: 'Maioridade Penal', value: permissoes.maioridadePenal ? 'Sim' : 'Não' },
+                { label: 'Pode Fazer Empréstimos', value: permissoes.podeFazerEmprestimos ? 'Sim' : 'Não' },
+                { label: 'Pode Abrir Conta Bancária', value: permissoes.podeAbrirContaBancaria ? 'Sim' : 'Não' }
+            ];
+
+            const result_text = document.getElementById('result-text');
+            result_text.innerHTML = generateList(dataList);
             document.getElementById('container-result-main').classList.remove('hide');
             topWarn('success', 'Dados Verificados com Sucesso!');
         }
@@ -52,14 +51,30 @@ function mostrarValor() {
     }
 }
 
-// Verifica a idade com entrada new Date()
+// Função para Formatar data [yyyy, mm, dd] => [dd, mm, yyyy]
+function formatDate(dateString) {
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+}
+
+// Gera uma lista a partir de um Array de Objetos
+function generateList(dataList) {
+    let listHTML = '<ul>';
+    dataList.forEach(item => {
+        listHTML += `<li><b>${item.label}:</b> ${item.value}</li>`;
+    });
+    listHTML += '</ul>';
+    return listHTML;
+}
+
+// Verifica a Idade a partir de um new Date();
 function verificarIdade(birth_date) {
     const actual_date = new Date();
     const diff_date = actual_date - birth_date;
     return Math.floor(diff_date / (1000 * 60 * 60 * 24 * 365.25));
 }
 
-// Verifica permissões legais com base na idade
+// Verifica Permissões a partir da idade
 function verificarPermissoes(idade) {
     return {
         podeBeber: idade >= 18,
@@ -74,20 +89,15 @@ function verificarPermissoes(idade) {
     };
 }
 
-// Ativa Caixas de Aviso
+// Função para exibir avisos
 function topWarn(type, text) {
-    if (!type) {
-        type = 'info';
-    }
-    const standard_text = text || ' ';
-    const container = document.getElementById('messages-warning');
-
+    if (!type) type = 'info';
+    
+    const container = document.getElementById('messages-warning-div');
     const alertToShow = container.querySelector(`.alert-${type}`);
     if (alertToShow) {
         const span = alertToShow.querySelector('span.text-warning');
-        if (span) {
-            span.innerHTML = text;
-        }
+        if (span) span.innerHTML = text;
         alertToShow.classList.remove('hide');
         container.classList.remove('hide');
     } else {

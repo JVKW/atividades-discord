@@ -7,6 +7,8 @@
   - O ano de nascimento
   
   Depois o programa deve exibir o nome completo de recruta, seu campo de estudo e sua idade (apenas baseada no ano de nascimento).
+
+  [Aviso] Alguns 'atributos', sistemas e estilos foram adicionados para a atividade por conta própria.
 -->
 
 <!DOCTYPE html>
@@ -14,97 +16,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título da Página-->
     <title>Registro de Recruta</title>
 
+    <!-- Links externos -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="container">
+        <!-- Formulário -->
         <div>
-            <h1>Verificação de Usuário</h1>
-            <form id="container-form" autocomplete="off">
-                <label for="first-name">Primeiro nome:</label>
-                <input type="text" id="first-name" placeholder="David" required>
+          <h1>Verificação de Usuário</h1>
+          <form id="container-form" autocomplete="off">
+              <label for="first-name">Primeiro nome:</label>
+              <input type="text" id="first-name" placeholder="David" required>
 
-                <label for="last-name">Segundo nome:</label>
-                <input type="text" id="last-name" placeholder="Cardoso" required>
+              <label for="last-name">Segundo nome:</label>
+              <input type="text" id="last-name" placeholder="Cardoso" required>
 
-                <label for="occupation-area">Área de Atuação:</label>
-                <select name="occupation-area" id="occupation-area" required>
-                    <option value="TI">Tecnologia da Informação</option>
-                    <option value="health">Saúde</option>
-                    <option value="education">Educação</option>
-                    <option value="engineering">Engenharia</option>
-                    <option value="administration_&_business">Administração e Negócios</option>
-                    <option value="arts_&_design">Artes e Design</option>
-                    <option value="social_&_human_sciences">Ciências Sociais e Humanas</option>
-                    <option value="environment_&_sustainability">Meio Ambiente e Sustentabilidade</option>
-                    <option value="law">Direito</option>
-                    <option value="communication">Comunicação</option>
-                    <option value="other">Outra</option>                
-                </select>
+              <label for="occupation-area">Área de Atuação:</label>
+              <select name="occupation-area" id="occupation-area" required>
+                  <option value="TI">Tecnologia da Informação</option>
+                  <option value="health">Saúde</option>
+                  <option value="education">Educação</option>
+                  <option value="engineering">Engenharia</option>
+                  <option value="administration_&_business">Administração e Negócios</option>
+                  <option value="arts_&_design">Artes e Design</option>
+                  <option value="social_&_human_sciences">Ciências Sociais e Humanas</option>
+                  <option value="environment_&_sustainability">Meio Ambiente e Sustentabilidade</option>
+                  <option value="law">Direito</option>
+                  <option value="communication">Comunicação</option>
+                  <option value="other">Outra</option>                
+              </select>
 
-                <label for="birth-date">Data de Nascimento:</label>
-                <input type="date" id="birth-date" name="birth-date" required>
+              <label for="birth-date">Data de Nascimento:</label>
+              <input type="date" id="birth-date" name="birth-date" required>
 
-                <button type='button' onclick="mostrarValor()">Verificar</button>
-            </form>
+              <button type='button' onclick="mostrarValor()">Verificar</button>
+          </form>
         </div>
 
+        <!-- Resultados -->
         <div id="container-result-main" class="hide">
           <div id="container-result">
-              <img src="./images/pexels-duggiefresch-4329861.jpg" id="recruit-image">
+              <img src="./images/cadete-imagem.jpg" id="recruit-image">
               <h3>Resultados</h3>
               <p id="result-text">Preencha com suas informações.</p>
-              <ul>
-                <li>
-                  Nome completo: <span></span>
-                </li>
-                <li>
-                  Data de Nascimento: 
-                </li>
-                <li>
-                  Idade:
-                </li>
-                <li>
-                  Área de Atuação: 
-                </li>
-                <li>
-                  Signo Zodíacal: 
-                </li>
-              </ul>
           </div>
         </div>
     </div>
 
-    <div id="messages-warning" class="hide">
+    <!-- Mensagens de Avisos-->
+    <div id="messages-warning-div" class="hide">
       <div class="alert alert-primary alert-dismissible hide">
           <span class="text-warning">
-              <strong>Muito bem!</strong> Teste realizado com sucesso!
+            <strong>Muito bem!</strong> Teste realizado com sucesso!
           </span>
           <button type="button" class="close" aria-label="Close">×</button>
       </div>
       <div class="alert alert-success alert-dismissible hide">
           <span class="text-warning">
-              <strong>Muito bem!</strong> Teste realizado com sucesso!
+            <strong>Muito bem!</strong> Teste realizado com sucesso!
           </span>
           <button type="button" class="close" aria-label="Close">×</button>
       </div>
       <div class="alert alert-info alert-dismissible hide">
           <span class="text-warning">
-              <strong>Muito bem!</strong> Teste realizado com sucesso!
+            <strong>Muito bem!</strong> Teste realizado com sucesso!
           </span>
           <button type="button" class="close" aria-label="Close">×</button>
       </div>
       <div class="alert alert-warning alert-dismissible hide">
           <span class="text-warning">
-              <strong>Muito bem!</strong> Teste realizado com sucesso!
+            <strong>Muito bem!</strong> Teste realizado com sucesso!
           </span>
           <button type="button" class="close" aria-label="Close">×</button>
       </div>
       <div class="alert alert-error alert-dismissible hide">
           <span class="text-warning">
-              <strong>Muito bem!</strong> Teste realizado com sucesso!
+            <strong>Muito bem!</strong> Teste realizado com sucesso!
           </span>
           <button type="button" class="close" aria-label="Close">×</button>
       </div>
